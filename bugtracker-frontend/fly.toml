@@ -1,0 +1,23 @@
+# fly.toml app configuration file generated for bugtracker-demo-sakila on 2026-02-25T12:30:27+05:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'bugtracker-demo-sakila'
+primary_region = 'sin'
+
+[build.args]
+NEXT_PUBLIC_API_URL = "https://bugtracker-backend-demo2026.fly.dev"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '256mb'
+  cpus = 1
+  memory_mb = 256

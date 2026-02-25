@@ -2,12 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-                sh 'date'
-                echo 'Hi from VS Code'
+        stage('E2E Tests') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.50.0-jammy'
+                    reuseNode true
+                    args '-u 0 --network=host'
+                }
             }
+            steps {
+               dir('e2e-tests') {
+                    sh 'npm ci'
+                    sh 'npx playwright test'
+                }
+            }
+        }
+        
+    }
+    post {
+        always {
+           cleanWs()
         }
     }
 }

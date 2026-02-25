@@ -10,7 +10,6 @@ pipeline {
                 }
             }
             steps {
-                sh 'docker compose down --remove-orphans || true'
                 sh 'docker compose up --build -d'
             }
         }
@@ -79,6 +78,8 @@ pipeline {
     }
     post {
         always {
+            sh 'docker compose down -v --remove-orphans || true'
+            sh 'docker ps -a -q -f name=bugtracker | xargs -r docker rm -f || true'
             cleanWs()
         }
     }

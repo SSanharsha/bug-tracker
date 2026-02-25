@@ -92,7 +92,7 @@ test("Adding a comment to a bug", async ({ page }) => {
   await page.fill('[data-testid="comment-author"]', `Test User ${timestamp}`);
   await page.click('button:text("Add Comment")');
 
-  await expect(page.locator(`p:text('Test commentWrong ${timestamp}')`)).toBeVisible(
+  await expect(page.locator(`p:text('Test comment ${timestamp}')`)).toBeVisible(
     { timeout: 10000 }
   );
 });

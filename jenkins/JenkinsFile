@@ -37,7 +37,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Staging') {
+        stage('Deploy Production') {
             when {
                 expression {
                     return env.GIT_BRANCH == 'orgin/main'
@@ -60,7 +60,7 @@ pipeline {
                 stage('Deploy Backend') {
                     steps {
                         dir('bugtracker-backend') {
-                            sh 'flyctl deploy -c fly.staging.toml -- remote-only'
+                            sh 'flyctl deploy -c fly.toml -- remote-only'
                         }
                     }
                 }
@@ -68,7 +68,7 @@ pipeline {
                 stage('Deploy Frontend') {
                     steps {
                         dir('bugtracker-frontend') {
-                            sh 'flyctl deploy -c fly.staging.toml -- remote-only'
+                            sh 'flyctl deploy -c fly.toml -- remote-only'
                         }
                     }
                 }
